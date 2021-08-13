@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginLogoutTest {
     private static WebDriver driver;
+    private ScreenShot takeScreen = new ScreenShot(driver);
     private LoginPage loginPage = new LoginPage(driver);
     private HomePage homePage = new HomePage(driver);
     private ChooseAccountPage chooseAccountPage = new ChooseAccountPage(driver);
@@ -36,7 +38,7 @@ public class LoginLogoutTest {
     @Test
     @Tag("yandex_login_test")
     @DisplayName("Login in mail test")
-    void yandexLoginTest() {
+    void yandexLoginTest() throws IOException {
         loginPage.loginToMail(username, password);
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.titleContains(homePage.getPageName()));
@@ -47,12 +49,13 @@ public class LoginLogoutTest {
                 () -> assertEquals(username + "\n" + username + "@yandex.com", homePage.getAccountName(),
                         "Incorrect user account name is shown")
         );
+        takeScreen.getScreen();
     }
 
     @Test
     @Tag("yandex_logout_test")
     @DisplayName("Logout from mail test")
-    void yandexLogoutTest() {
+    void yandexLogoutTest() throws IOException {
         loginPage.loginToMail(username, password);
         homePage.clickSignOut();
 
@@ -62,5 +65,6 @@ public class LoginLogoutTest {
                 () -> assertEquals(username, chooseAccountPage.getAccountName(),
                         "Incorrect user account name is shown")
         );
+        takeScreen.getScreen();
     }
 }
