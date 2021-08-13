@@ -2,6 +2,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -12,9 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginLogoutTest {
     private static WebDriver driver;
-    private LoginPage loginPage = new LoginPage(driver);
-    private HomePage homePage = new HomePage(driver);
-    private ChooseAccountPage chooseAccountPage = new ChooseAccountPage(driver);
+    private LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
+    private HomePage homePage = PageFactory.initElements(driver, HomePage.class);
+    private ChooseAccountPage chooseAccountPage = PageFactory.initElements(driver, ChooseAccountPage.class);
     private final String username = "firstnamelastname1989";
     private final String password = "pTKJctHpbaj@t7M";
 
@@ -25,7 +26,7 @@ public class LoginLogoutTest {
 
     @AfterEach
     public void afterTest() {
-      SingleDriver.clearBrowserData();
+     SingleDriver.clearBrowserData();
     }
 
     @AfterAll
