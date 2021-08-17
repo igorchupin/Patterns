@@ -5,36 +5,26 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class ChooseAccountPage {
 
     private final WebDriver driver;
-    private final By youAreLoggedOutText = By.xpath("//h3[@class='AuthAccountList-unathorizedAccountsTitle']");
-    private final By accountsList = By.xpath("//div/a[@class='AuthAccountListItem']");
-    private final By currentAccountName = By.xpath("//span[@class='CurrentAccount-displayName']");
+    private static final By YOU_ARE_LOGGED_OUT_TEXT = By.xpath("//h3[@class='AuthAccountList-unathorizedAccountsTitle']");
+    private static final By CURRENT_ACCOUNT_NAME = By.xpath("//span[@class='CurrentAccount-displayName']");
 
-    public ChooseAccountPage(WebDriver driver) {
-        this.driver = driver;
+    public ChooseAccountPage() {
+       driver = SingleDriver.getSingleDriverInstance().getDriver();
     }
 
-    public String getLogoutText() {
-        WebElement account = driver.findElement(currentAccountName);
+    public String getTextThatUserWasLoggedOut() {
+        WebElement account = driver.findElement(CURRENT_ACCOUNT_NAME);
         account.click();
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(youAreLoggedOutText));
-        return driver.findElement(youAreLoggedOutText).getText();
-    }
-
-    public List<WebElement> getAccountsList() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(youAreLoggedOutText));
-        return driver.findElements(accountsList);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(YOU_ARE_LOGGED_OUT_TEXT));
+        return driver.findElement(YOU_ARE_LOGGED_OUT_TEXT).getText();
     }
 
     public String getAccountName() {
-        return driver.findElement(currentAccountName).getText();
+        return driver.findElement(CURRENT_ACCOUNT_NAME).getText();
     }
-
-
 }

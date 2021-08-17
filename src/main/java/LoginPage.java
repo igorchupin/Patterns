@@ -2,34 +2,25 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage {
-    private final WebDriver driver;
-    private final String loginPageURL = "https://mail.yandex.com/";
-    private final By enterButton = By.xpath("//*[@id=\"index-page-container\"]/div/div[2]/div/div/div[4]/a[2]");
-    private final By emailField = By.id("passp-field-login");
-    private final By loginButton = By.id("passp:sign-in");
-    private final By passwordField = By.id("passp-field-passwd");
+    private final WebDriver driver ;
+    private static final String LOGIN_PAGE_URL = "https://mail.yandex.com/";
+    private static final By ENTER_BUTTON = By.xpath("//div[@class='HeadBanner-ButtonsWrapper']//a[2]");
+    private static final By EMAIL_FIELD = By.id("passp-field-login");
+    private static final By LOGIN_BUTTON = By.id("passp:sign-in");
+    private static final By PASSWORD_FIELD = By.id("passp-field-passwd");
 
-    public LoginPage(WebDriver driver) {
-        this.driver = driver;
-        this.driver.navigate().to(loginPageURL);
+    public LoginPage() {
+       driver = SingleDriver.getSingleDriverInstance().getDriver();
+       this.driver.navigate().to(LOGIN_PAGE_URL);
     }
 
-    public LoginPage sendUsername(String username) {
-        driver.findElement(emailField).sendKeys(username);
-        return this;
-    }
+        public HomePage loginToMail(String username, String password) {
+        driver.findElement(ENTER_BUTTON).click();
+        driver.findElement(EMAIL_FIELD).sendKeys(username);;
+        driver.findElement(LOGIN_BUTTON).click();
+        driver.findElement(PASSWORD_FIELD).sendKeys(password);
+        driver.findElement(LOGIN_BUTTON).click();
+        return new HomePage();
 
-    public LoginPage sendPassword(String password) {
-        driver.findElement(passwordField).sendKeys(password);
-        return this;
-    }
-
-    public HomePage loginToMail(String username, String password) {
-        driver.findElement(enterButton).click();
-        sendUsername(username);
-        driver.findElement(loginButton).click();
-        sendPassword(password);
-        driver.findElement(loginButton).click();
-        return new HomePage(driver);
     }
 }

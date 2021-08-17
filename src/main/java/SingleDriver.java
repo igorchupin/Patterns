@@ -8,31 +8,30 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.concurrent.TimeUnit;
 
 public class SingleDriver {
-    private static WebDriver driver;
+    private static SingleDriver singleDriver = null;
+    private WebDriver driver;
 
-    public static WebDriver getInstance() {
-        if (driver == null) {
-            synchronized (SingleDriver.class) {
-                if (driver == null) {
-                    WebDriverManager.chromedriver().setup();
-                    driver = new ChromeDriver();
-                    driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-                }
-            }
+    private SingleDriver() {
+         WebDriverManager.chromedriver().setup();
+         driver = new ChromeDriver();
+         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+    }
+
+    public static SingleDriver getSingleDriverInstance () {
+        if (singleDriver == null) {
+            singleDriver = new SingleDriver();
         }
+        return singleDriver;
+    }
+
+    public WebDriver getDriver () {
         return driver;
     }
 
-    public static void close() {
-        if (driver != null) {
+    public void closeDriver () {
+        if (singleDriver != null) {
             driver.close();
+            singleDriver = null;
         }
-    }
-
-    public static void clearBrowserData() {
-        driver.get("chrome://settings/clearBrowserData");
-        WebElement web = driver.findElement(By.xpath("//settings-ui"));
-        web.sendKeys(Keys.TAB, Keys.TAB, Keys.TAB, Keys.TAB, Keys.TAB, Keys.TAB, Keys.TAB, Keys.ENTER); // =))))))
-        //I tried to delete cookies, to find other solutions in Internet but I did not found it =(((
     }
 }
