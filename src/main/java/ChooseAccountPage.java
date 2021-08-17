@@ -18,11 +18,11 @@ public class ChooseAccountPage {
     @FindBy(xpath = "//span[@class='CurrentAccount-displayName']")
     WebElement currentAccountName;
 
-    public ChooseAccountPage(WebDriver driver) {
-        this.driver = driver;
+    public ChooseAccountPage() {
+        driver = SingleDriver.getSingleDriverInstance().getDriver();
     }
 
-    public String getLogoutText() {
+    public String getTextThatUserWasLoggedOut() {
         currentAccountName.click();
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(youAreLoggedOutText));
@@ -32,5 +32,4 @@ public class ChooseAccountPage {
     public String getAccountName() {
         return currentAccountName.getText();
     }
-
 }

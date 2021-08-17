@@ -4,9 +4,9 @@ import org.openqa.selenium.support.FindBy;
 
 public class LoginPage {
     private final WebDriver driver;
-    private final String loginPageURL = "https://mail.yandex.com/";
+    private static final String LOGIN_PAGE_URL = "https://mail.yandex.com/";
 
-    @FindBy(xpath = "//*[@id=\"index-page-container\"]/div/div[2]/div/div/div[4]/a[2]")
+    @FindBy(xpath ="//div[@class='HeadBanner-ButtonsWrapper']//a[2]")
     WebElement enterButton;
 
     @FindBy(id = "passp-field-login")
@@ -19,28 +19,17 @@ public class LoginPage {
     WebElement passwordField;
 
 
-    public LoginPage(WebDriver driver) {
-        this.driver = driver;
-        this.driver.navigate().to(loginPageURL);
-
-    }
-
-    public LoginPage sendUsername(String username) {
-        emailField.sendKeys(username);
-        return this;
-    }
-
-    public LoginPage sendPassword(String password) {
-        passwordField.sendKeys(password);
-        return this;
+    public LoginPage() {
+        driver = SingleDriver.getSingleDriverInstance().getDriver();
+        this.driver.navigate().to(LOGIN_PAGE_URL);
     }
 
     public HomePage loginToMail(String username, String password) {
         enterButton.click();
-        sendUsername(username);
+        emailField.sendKeys(username);
         loginButton.click();
-        sendPassword(password);
+        passwordField.sendKeys(password);
         loginButton.click();
-        return new HomePage(driver);
+        return new HomePage();
     }
 }
