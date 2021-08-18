@@ -12,7 +12,7 @@ public class HomePage {
    public HomePage() {
        driver= SingleDriver.getSingleDriverInstance().getDriver();
        WebDriverWait wait = new WebDriverWait(driver, 5);
-       wait.until(ExpectedConditions.titleContains("Inbox — Yandex.Mail"));
+       wait.until(ExpectedConditions.visibilityOfElementLocated(USER_ICON));
     }
 
     public String getAccountName() {
