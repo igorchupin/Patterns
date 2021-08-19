@@ -26,13 +26,12 @@ public class LoginLogoutTest {
     void yandexLoginTest() {
         HomePage homePage = loginPage.loginToMail(username, password);
 
-        assertAll("HomePage",
-                () -> assertTrue(driver.getTitle().contains(EXPECTED_NAME),
+         assertTrue(driver.getTitle().contains(EXPECTED_NAME),
                         String.format("Incorrect page was opened. Expected title: %s. Actual title is: %s",
-                                EXPECTED_NAME, driver.getTitle())),
-                () -> assertEquals(username + "\n" + username + "@yandex.com", homePage.getAccountName(),
-                        "Incorrect user account name is shown")
-        );
+                                EXPECTED_NAME, driver.getTitle()));
+            assertEquals(username + "\n" + username + "@yandex.com", homePage.getAccountName(),
+                        "Incorrect user account name is shown");
+
     }
 
     @Test
@@ -42,13 +41,12 @@ public class LoginLogoutTest {
        HomePage homePage = loginPage.loginToMail(username, password);
        ChooseAccountPage chooseAccountPage = homePage.signOut();
 
-        assertAll("Choose account Page",
-                () -> assertTrue(chooseAccountPage.getTextThatUserWasLoggedOut().matches("You are logged out of:"),
+
+             assertTrue(chooseAccountPage.getTextThatUserWasLoggedOut().matches("You are logged out of:"),
                         String.format("Incorrect page was opened. The opened page does not contain text 'You are logged out of:'" +
-                                " and has the title: %s", driver.getTitle())),
-                () -> assertEquals(username, chooseAccountPage.getAccountName(),
-                        "Incorrect user account name is shown")
-        );
+                                " and has the title: %s", driver.getTitle()));
+                 assertEquals(username, chooseAccountPage.getAccountName(),
+                        "Incorrect user account name is shown");
 
     }
     @Test
