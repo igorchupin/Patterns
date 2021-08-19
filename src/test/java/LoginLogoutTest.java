@@ -49,5 +49,11 @@ public class LoginLogoutTest {
                 () -> assertEquals(username, chooseAccountPage.getAccountName(),
                         "Incorrect user account name is shown")
         );
+
     }
+    @Test
+
+    @Tag("yandex_logout_test")
+    @DisplayName("Logout from mail test")
+    void yandexLogoutTestq() {}
 }
