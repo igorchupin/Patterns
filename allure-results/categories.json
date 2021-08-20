@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Ignored tests",
+    "matchedStatuses": ["skipped"]
+  },
+
+  {
+    "name": "Broken Tests",
+    "matchedStatuses": ["broken"]
+  },
+
+  {
+    "name": "Alarm!!! Bug!!!",
+    "matchedStatuses": ["failed"]
+  },
+
+  {
+    "name": "Test has defect",
+    "matchedStatuses": ["unknown"]
+  },
+
+  {
+    "name": "Passed Tests",
+    "matchedStatuses": ["passed"]
+  }
+]
