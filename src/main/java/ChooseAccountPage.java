@@ -4,6 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.net.MalformedURLException;
 import java.util.List;
 
 public class ChooseAccountPage {
@@ -12,7 +13,7 @@ public class ChooseAccountPage {
     private static final By YOU_ARE_LOGGED_OUT_TEXT = By.xpath("//h3[@class='AuthAccountList-unathorizedAccountsTitle']");
     private static final By CURRENT_ACCOUNT_NAME = By.xpath("//span[@class='CurrentAccount-displayName']");
 
-    public ChooseAccountPage() {
+    public ChooseAccountPage() throws MalformedURLException {
        driver = SingleDriver.getSingleDriverInstance().getDriver();
     }
 

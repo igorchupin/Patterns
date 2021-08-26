@@ -8,20 +8,31 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.*;
 import org.junit.platform.launcher.TestExecutionListener;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.openqa.selenium.WebDriver;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(TestListeners.class)
 public class LoginLogoutTest {
-    private  WebDriver driver;
+    private WebDriver driver;
     private LoginPage loginPage = new LoginPage();
     private final String username = "firstnamelastname1989";
     private final String password = "pTKJctHpbaj@t7M";
     private static final String EXPECTED_NAME = "Inbox — Yandex.Mail";
 
+    public LoginLogoutTest() throws MalformedURLException {
+    }
+
     @BeforeEach
-    public void beforeTest () {
+    public void beforeTest () throws MalformedURLException {
         driver = SingleDriver.getSingleDriverInstance().getDriver();
     }
 
@@ -32,7 +43,7 @@ public class LoginLogoutTest {
     @Test
     @Tag("yandex_login_test")
     @DisplayName("Login in mail test")
-    void yandexLoginTest() {
+    void yandexLoginTest() throws MalformedURLException {
         HomePage homePage = loginPage.loginToMail(username, password);
 
          assertTrue(driver.getTitle().contains(EXPECTED_NAME),
@@ -49,7 +60,7 @@ public class LoginLogoutTest {
     @Test
     @Tag("yandex_logout_test")
     @DisplayName("Logout from mail test")
-    void yandexLogoutTest() {
+    void yandexLogoutTest() throws MalformedURLException {
        HomePage homePage = loginPage.loginToMail(username, password);
        ChooseAccountPage chooseAccountPage = homePage.signOut();
 
@@ -66,7 +77,7 @@ public class LoginLogoutTest {
     @Test
     @Tag("yandex_logout_test")
     @DisplayName("Always failed test")
-    void yandexLogoutFailTest() {
+    void yandexLogoutFailTest() throws MalformedURLException {
         HomePage homePage = loginPage.loginToMail(username, password);
         ChooseAccountPage chooseAccountPage = homePage.signOut();
 
@@ -84,7 +95,7 @@ public class LoginLogoutTest {
     @Test
     @Tag("yandex_login_test")
     @DisplayName("Login in mail test with error")
-    void yandexLoginErrorMessageTest() {
+    void yandexLoginErrorMessageTest() throws MalformedURLException {
         HomePage homePage = loginPage.loginToMail(username, password);
 
         assertTrue(driver.getTitle().contains(EXPECTED_NAME + "!!!"),

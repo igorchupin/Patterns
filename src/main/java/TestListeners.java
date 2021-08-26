@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Optional;
 
 import io.qameta.allure.Attachment;
@@ -13,12 +14,21 @@ public class TestListeners implements TestWatcher{
 
     @Override
     public void testAborted(ExtensionContext extensionContext, Throwable throwable) {
-       SingleDriver.getSingleDriverInstance().closeDriver();
+        try {
+            SingleDriver.getSingleDriverInstance().closeDriver();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public void testDisabled(ExtensionContext extensionContext, Optional<String> optional) {
-        SingleDriver.getSingleDriverInstance().closeDriver();
+        try {
+            SingleDriver.getSingleDriverInstance().closeDriver();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -29,11 +39,19 @@ public class TestListeners implements TestWatcher{
             e.printStackTrace();
         }
         FailedTestsTools.attachBrowserVersion();
-        SingleDriver.getSingleDriverInstance().closeDriver();
+        try {
+            SingleDriver.getSingleDriverInstance().closeDriver();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void testSuccessful(ExtensionContext extensionContext) {
-        SingleDriver.getSingleDriverInstance().closeDriver();
+        try {
+            SingleDriver.getSingleDriverInstance().closeDriver();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 }
